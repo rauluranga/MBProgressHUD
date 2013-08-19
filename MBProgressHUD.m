@@ -75,6 +75,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 @synthesize animationType;
 @synthesize delegate;
 @synthesize opacity;
+@synthesize cornerRadius;
 @synthesize color;
 @synthesize labelFont;
 @synthesize detailsLabelFont;
@@ -162,6 +163,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 		self.labelText = nil;
 		self.detailsLabelText = nil;
 		self.opacity = 0.8f;
+        self.cornerRadius = 10.0f;
         self.color = nil;
 		self.labelFont = [UIFont boldSystemFontOfSize:kLabelFontSize];
 		self.detailsLabelFont = [UIFont boldSystemFontOfSize:kDetailsLabelFontSize];
@@ -621,7 +623,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	// Draw rounded HUD backgroud rect
 	CGRect boxRect = CGRectMake(roundf((allRect.size.width - size.width) / 2) + self.xOffset,
 								roundf((allRect.size.height - size.height) / 2) + self.yOffset, size.width, size.height);
-	float radius = 10.0f;
+	float radius = self.cornerRadius;
 	CGContextBeginPath(context);
 	CGContextMoveToPoint(context, CGRectGetMinX(boxRect) + radius, CGRectGetMinY(boxRect));
 	CGContextAddArc(context, CGRectGetMaxX(boxRect) - radius, CGRectGetMinY(boxRect) + radius, radius, 3 * (float)M_PI / 2, 0, 0);

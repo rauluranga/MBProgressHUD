@@ -322,6 +322,11 @@ typedef void (^MBProgressHUDCompletionBlock)();
 @property (assign) float opacity;
 
 /**
+ * The corner radius of the HUD window. Defaults to 10.0.
+ */
+@property (assign) float cornerRadius;
+
+/**
  * The color of the HUD window. Defaults to black. If this property is set, color is set using
  * this UIColor and the opacity property is not used.  using retain because performing copy on
  * UIColor base colors (like [UIColor greenColor]) cause problems with the copyZone.
