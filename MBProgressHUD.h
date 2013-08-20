@@ -337,6 +337,9 @@ typedef void (^MBProgressHUDCompletionBlock)();
 
 @property (nonatomic, MB_WEAK) UIColor *detailsLabelTextColor;
 
+@property (nonatomic, MB_STRONG, setter=setActivityIndicatorColor:) UIColor *activityIndicatorViewColor;
+
+
 
 /** 
  * The x-axis offset of the HUD relative to the centre of the superview. 

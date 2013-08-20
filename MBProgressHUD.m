@@ -105,6 +105,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 
 @dynamic labelTextColor;
 @dynamic detailsLabelTextColor;
+@synthesize activityIndicatorViewColor;
 
 #pragma mark - Class methods
 
@@ -170,6 +171,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
         self.color = nil;
         self.labelTextColor = nil;
         self.detailsLabelTextColor = nil;
+        self.activityIndicatorViewColor = nil;
 		self.labelFont = [UIFont boldSystemFontOfSize:kLabelFontSize];
 		self.detailsLabelFont = [UIFont boldSystemFontOfSize:kDetailsLabelFontSize];
 		self.xOffset = 0.0f;
@@ -224,6 +226,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	[minShowTimer release];
 	[showStarted release];
 	[customView release];
+    [activityIndicatorViewColor release];
 #if NS_BLOCKS_AVAILABLE
 	[completionBlock release];
 #endif
@@ -439,7 +442,6 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 #pragma mark - Colored labels
 
 - (void)setLabelTextColor:(UIColor *)labelTextColor {
-    NSLog(@"%@", labelTextColor);
     label.textColor = labelTextColor;
 }
 
@@ -448,14 +450,26 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 }
 
 - (void)setDetailsLabelTextColor:(UIColor *)detailsLabelTextColor {
-      NSLog(@"%@", self.detailsLabelTextColor);
       detailsLabel.textColor = detailsLabelTextColor;
 }
 
 - (UIColor *)detailsLabelTextColor {
-       return detailsLabel.textColor;
-    }
+    return detailsLabel.textColor;
+}
 
+-(void) setActivityIndicatorColor:(UIColor *)colorValue {
+    
+    if (activityIndicatorViewColor != colorValue) {
+        UIColor* savedColor = activityIndicatorViewColor;
+        activityIndicatorViewColor = MB_RETAIN(colorValue);
+        MB_RELEASE(savedColor);
+    }
+    
+    BOOL isActivityIndicator = [indicator isKindOfClass:[UIActivityIndicatorView class]];
+    if (mode == MBProgressHUDModeIndeterminate &&  isActivityIndicator) {
+        [(UIActivityIndicatorView *)indicator setColor:activityIndicatorViewColor];
+	}
+}
 
 - (void)setupLabels {
     
@@ -492,7 +506,12 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 		[indicator removeFromSuperview];
 		self.indicator = MB_AUTORELEASE([[UIActivityIndicatorView alloc]
 										 initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge]);
-		[(UIActivityIndicatorView *)indicator startAnimating];
+        
+        if (self.activityIndicatorViewColor) {
+            [(UIActivityIndicatorView *)indicator setColor:self.activityIndicatorViewColor];
+        }
+        
+        [(UIActivityIndicatorView *)indicator startAnimating];
 		[self addSubview:indicator];
 	}
 	else if (mode == MBProgressHUDModeDeterminateHorizontalBar) {
