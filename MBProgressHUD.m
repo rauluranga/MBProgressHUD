@@ -103,6 +103,9 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 @synthesize completionBlock;
 #endif
 
+@dynamic labelTextColor;
+@dynamic detailsLabelTextColor;
+
 #pragma mark - Class methods
 
 + (MB_INSTANCETYPE)showHUDAddedTo:(UIView *)view animated:(BOOL)animated {
@@ -165,6 +168,8 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 		self.opacity = 0.8f;
         self.cornerRadius = 10.0f;
         self.color = nil;
+        self.labelTextColor = nil;
+        self.detailsLabelTextColor = nil;
 		self.labelFont = [UIFont boldSystemFontOfSize:kLabelFontSize];
 		self.detailsLabelFont = [UIFont boldSystemFontOfSize:kDetailsLabelFontSize];
 		self.xOffset = 0.0f;
@@ -431,7 +436,29 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 
 #pragma mark - UI
 
+#pragma mark - Colored labels
+
+- (void)setLabelTextColor:(UIColor *)labelTextColor {
+    NSLog(@"%@", labelTextColor);
+    label.textColor = labelTextColor;
+}
+
+- (UIColor *)labelTextColor {
+    return label.textColor;
+}
+
+- (void)setDetailsLabelTextColor:(UIColor *)detailsLabelTextColor {
+      NSLog(@"%@", self.detailsLabelTextColor);
+      detailsLabel.textColor = detailsLabelTextColor;
+}
+
+- (UIColor *)detailsLabelTextColor {
+       return detailsLabel.textColor;
+    }
+
+
 - (void)setupLabels {
+    
 	label = [[UILabel alloc] initWithFrame:self.bounds];
 	label.adjustsFontSizeToFitWidth = NO;
 	label.textAlignment = MBLabelAlignmentCenter;
@@ -448,7 +475,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	detailsLabel.textAlignment = MBLabelAlignmentCenter;
 	detailsLabel.opaque = NO;
 	detailsLabel.backgroundColor = [UIColor clearColor];
-	detailsLabel.textColor = [UIColor whiteColor];
+	detailsLabel.textColor = [UIColor whiteColor];;
 	detailsLabel.numberOfLines = 0;
 	detailsLabel.font = self.detailsLabelFont;
 	detailsLabel.text = self.detailsLabelText;

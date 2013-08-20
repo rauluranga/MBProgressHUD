@@ -333,6 +333,11 @@ typedef void (^MBProgressHUDCompletionBlock)();
  */
 @property (MB_STRONG) UIColor *color;
 
+@property (nonatomic, MB_WEAK) UIColor *labelTextColor;
+
+@property (nonatomic, MB_WEAK) UIColor *detailsLabelTextColor;
+
+
 /** 
  * The x-axis offset of the HUD relative to the centre of the superview. 
  */
